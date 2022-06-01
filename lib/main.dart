@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_pratice/dashboardscreen.dart';
 
 void main() => runApp(const MyApp());
 
@@ -27,6 +30,7 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  bool isValid=false;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   String emailPattern =
@@ -36,24 +40,30 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   String passwordPattern =
       r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
 
-  void _checkTextFieldValidation(BuildContext context) {
+  bool _checkTextFieldValidation(BuildContext context) {
     String useremail, password;
+    bool isValid= false;
     useremail = emailController.text;
     password = passwordController.text;
     if (useremail == '' || password == '') {
       _showSnackBar(context, 'Fields are empty');
+      isValid=false;
     } else {
       if (useremail != '' && !RegExp(emailPattern).hasMatch(useremail)) {
+        isValid=false;
         _showSnackBar(context, 'Enter Valid email Address');
       } else {
         if (password != '' && !RegExp(passwordPattern).hasMatch(password)) {
+          isValid=false;
           _showSnackBar(context, 'Enter Valid Password');
         }
         else{
           _showSnackBar(context, 'All Good');
+          isValid=true;
         }
       }
     }
+    return isValid;
   }
 
   _showSnackBar(BuildContext context, String validationInfo) {
@@ -126,7 +136,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 child: ElevatedButton(
                   child: const Text('Login'),
                   onPressed: () {
-                    _checkTextFieldValidation(context);
+                    isValid=_checkTextFieldValidation(context);
+                    if(isValid)
+                     {
+                        print(isValid);
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => DashBoardScreen()));
+                      }
                   },
                 )),
             Row(
