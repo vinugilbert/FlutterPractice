@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pratice/widgets/app_drawer.dart';
 
 import 'widgets/user_transactions.dart';
 
@@ -12,8 +13,9 @@ class DashBoardScreen extends StatelessWidget{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flutter App'),
+        title: Text('List Page'),
       ),
+      drawer: AppDrawer(),
       body: SingleChildScrollView(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.start,
