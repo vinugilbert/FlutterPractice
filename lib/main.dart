@@ -2,6 +2,8 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_pratice/dashboardscreen.dart';
+import 'package:flutter_pratice/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() => runApp(const MyApp());
 
@@ -12,11 +14,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: _title,
-      home: Scaffold(
-        appBar: AppBar(title: const Text(_title)),
-        body: const MyStatefulWidget(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ProductProviders(),),
+      ],
+      child: MaterialApp(
+        title: _title,
+        home: Scaffold(
+          appBar: AppBar(title: const Text(_title)),
+          body: const MyStatefulWidget(),
+        ),
       ),
     );
   }
@@ -136,11 +143,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 child: ElevatedButton(
                   child: const Text('Login'),
                   onPressed: () {
-                    isValid=_checkTextFieldValidation(context);
+                    isValid=true;
                     if(isValid)
                      {
-                        print(isValid);
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => DashBoardScreen()));
+                       Navigator.push(context, MaterialPageRoute(builder: (context) => DashBoardScreen()));
                       }
                   },
                 )),

@@ -11,9 +11,9 @@ class AppDrawer extends StatelessWidget
           automaticallyImplyLeading: false,
         ),
         Divider(),
-        ListTile(leading: Icon(Icons.camera),title: Text('Camera'),),
+        ListTile(leading: Icon(Icons.add_shopping_cart),title: Text('Orders'),),
         Divider(),
-        ListTile(leading: Icon(Icons.camera),title: Text('Camera'),),
+        ListTile(leading: Icon(Icons.message),title: Text('Messages'),),
         Divider(),
         ListTile(leading: Icon(Icons.camera),title: Text('Camera'),),
 

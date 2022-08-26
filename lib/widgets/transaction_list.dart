@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pratice/models/products_list.dart';
+import 'package:flutter_pratice/models/transaction_model.dart';
 import 'package:intl/intl.dart';
 
 import '../models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
+  final List<Datum> products;
 
-  TransactionList(this.transactions);
+
+  TransactionList(this.transactions,this.products);
 
   @override
   Widget build(BuildContext context) {
+
+
     return Container(
-      height: 300,
+      height: 500,
       child: ListView.builder(
         itemBuilder: (ctx, index) {
           return Card(
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Container(
                   margin: EdgeInsets.symmetric(
@@ -30,7 +37,7 @@ class TransactionList extends StatelessWidget {
                   ),
                   padding: EdgeInsets.all(10),
                   child: Text(
-                    '\$${transactions[index].amount}',
+                    '\$${products[index].price}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -42,25 +49,29 @@ class TransactionList extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      transactions[index].title,
+                      products[index].itemName.toString(),
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      DateFormat.yMMMd().format(transactions[index].date),
+                      (products[index].expiryDate.toString()),
                       style: TextStyle(
                         color: Colors.grey,
                       ),
                     ),
                   ],
                 ),
+                Checkbox(
+                  onChanged: null,
+                  value: true,
+                )
               ],
             ),
           );
         },
-        itemCount: transactions.length,
+        itemCount: products.length,
       ),
     );
   }
