@@ -66,7 +66,7 @@ super.didChangeDependencies();
   ];
 
 
-  callWebService()  async {
+/*  callWebService()  async {
     // setState(() {
     //   isLoading = true;
     // });
@@ -112,7 +112,7 @@ super.didChangeDependencies();
       });
     }
 
-  }
+  }*/
 
   void _addNewTransaction(String txTitle, double txAmount) {
     final newTx = Transaction(
