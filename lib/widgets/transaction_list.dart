@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../models/transaction.dart';
 
-class TransactionList extends StatelessWidget {
+class TransactionList extends StatefulWidget {
   final List<Transaction> transactions;
   final List<Datum> products;
 
@@ -13,8 +13,17 @@ class TransactionList extends StatelessWidget {
   TransactionList(this.transactions,this.products);
 
   @override
+  _TransactionListState createState() => _TransactionListState();
+}
+class _TransactionListState extends State<TransactionList> {
+ // bool? isChecked = false;
+  static int _len = 6;
+  List<bool> isChecked = List.generate(_len, (index) => false);
+
+  @override
   Widget build(BuildContext context) {
 
+    //final List<Datum> products;
 
     return Container(
       height: 500,
@@ -22,7 +31,6 @@ class TransactionList extends StatelessWidget {
         itemBuilder: (ctx, index) {
           return Card(
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Container(
                   margin: EdgeInsets.symmetric(
@@ -37,7 +45,7 @@ class TransactionList extends StatelessWidget {
                   ),
                   padding: EdgeInsets.all(10),
                   child: Text(
-                    '\$${products[index].price}',
+                    '\$${widget.products[index].price}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -45,33 +53,44 @@ class TransactionList extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      products[index].itemName.toString(),
+                      widget.products[index].itemName.toString(),
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    SizedBox(height: 10),
                     Text(
-                      (products[index].expiryDate.toString()),
+                      (widget.products[index].expiryDate.toString()),
                       style: TextStyle(
                         color: Colors.grey,
                       ),
                     ),
                   ],
                 ),
+
                 Checkbox(
-                  onChanged: null,
-                  value: true,
+                  value: isChecked[index],
+                  autofocus: false,
+                  activeColor: Colors.deepPurple,
+                  checkColor: Colors.white,
+                  onChanged:(value)
+                  {
+                    setState(() {
+                      isChecked[index]=value!;
+                    });
+                  },
                 )
               ],
             ),
           );
         },
-        itemCount: products.length,
+        itemCount: widget.products.length,
       ),
     );
   }

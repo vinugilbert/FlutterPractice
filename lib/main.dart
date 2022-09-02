@@ -3,9 +3,15 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_pratice/dashboardscreen.dart';
 import 'package:flutter_pratice/providers/product_provider.dart';
+import 'package:flutter_pratice/shared_pref/user_preference.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp(const MyApp());
+Future main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await UserPreference.init();
+runApp(const MyApp());
+}
+
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -20,6 +26,11 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: _title,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.deepPurple).copyWith(secondary: Colors.deepOrangeAccent),
+              unselectedWidgetColor: Colors.purple,
+              fontFamily: 'Lato',
+        ),
         home: Scaffold(
           appBar: AppBar(title: const Text(_title)),
           body: const MyStatefulWidget(),
@@ -97,7 +108,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 child: const Text(
                   'Flutter Learning',
                   style: TextStyle(
-                      color: Colors.blue,
+                      color: Colors.deepPurple,
                       fontWeight: FontWeight.w500,
                       fontSize: 30),
                 )),
@@ -106,7 +117,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 padding: const EdgeInsets.all(10),
                 child: const Text(
                   'Sign in',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 20,
+                  color: Colors.deepOrange),
                 )),
             Container(
               padding: const EdgeInsets.all(10),
@@ -142,10 +154,13 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: ElevatedButton(
                   child: const Text('Login'),
-                  onPressed: () {
+                  onPressed: () async{
                     isValid=true;
                     if(isValid)
                      {
+                       await UserPreference.setUserEmail("vinuugilbert@gmail.com");
+                       UserPreference.setUserName("Vinu Gilberrt");
+                       UserPreference.setUserPassword(2345);
                        Navigator.push(context, MaterialPageRoute(builder: (context) => DashBoardScreen()));
                       }
                   },
@@ -155,7 +170,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 const Text('Does not have account?'),
                 TextButton(
                   child: const Text(
-                    'Sign In',
+                    'Sign Up',
                     style: TextStyle(fontSize: 20, color: Colors.deepOrange),
                   ),
                   onPressed: () {
